@@ -141,9 +141,8 @@
   .qf .v small{display:block;font-family:'Jost';font-size:11px;letter-spacing:.04em;color:var(--ink-soft);margin-top:3px;}
 
   .place{margin-top:52px;}
-  .place-art{position:relative;width:100%;overflow:hidden;border-radius:18px;aspect-ratio:3/2;
-    box-shadow:0 14px 34px rgba(92,111,149,.16);}
-  .place-art img{width:100%;height:100%;object-fit:cover;}
+  .place-art{position:relative;width:calc(100% + 28px);margin:0 -14px;}
+  .place-art img{width:100%;height:auto;mix-blend-mode:multiply;}
   .place-tag{
     display:inline-block;font-size:10px;letter-spacing:.42em;text-transform:uppercase;
     color:#fff;background:var(--blue-deep);padding:7px 16px;text-indent:.42em;
@@ -313,6 +312,49 @@
   /* ───────── RSVP ───────── */
   #rsvp{padding:64px 0 44px;text-align:center;}
   .rsvp-note{font-size:13.5px;line-height:1.85;color:var(--ink-soft);max-width:400px;margin:26px auto 0;}
+  .rsvp-box{max-width:400px;margin:30px auto 0;text-align:left;}
+  .rsvp-box[hidden]{display:none;}
+  .rsvp-search{position:relative;}
+  .rsvp-search svg{position:absolute;left:18px;top:50%;width:16px;height:16px;transform:translateY(-50%);color:var(--blue-deep);pointer-events:none;}
+  .rsvp-input{
+    width:100%;font-family:'Jost',sans-serif;font-weight:300;font-size:16px;color:var(--ink);
+    background:rgba(255,255,255,.7);border:1px solid var(--blue-soft);border-radius:40px;
+    padding:15px 20px 15px 46px;outline:none;transition:.3s;
+  }
+  .rsvp-input:focus{border-color:var(--blue-deep);box-shadow:0 0 0 4px rgba(145,168,208,.18);}
+  .rsvp-input::placeholder{color:#9aa3ab;}
+  .rsvp-results{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
+  .rsvp-group{
+    display:block;width:100%;text-align:left;cursor:pointer;font-family:'Jost',sans-serif;font-weight:300;
+    background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:14px;padding:14px 18px;
+    font-size:14px;line-height:1.6;color:var(--ink-soft);transition:.3s;
+  }
+  .rsvp-group:hover{border-color:var(--blue);background:#fff;}
+  .rsvp-group small{display:block;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:4px;}
+  .rsvp-group mark{background:none;color:var(--ink);font-weight:400;}
+  .rsvp-empty{font-size:13px;line-height:1.75;color:var(--ink-soft);text-align:center;padding:6px 4px;}
+  .rsvp-empty a{color:var(--blue-deep);}
+  .rsvp-step-lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue-deep);text-align:center;}
+  .rsvp-members{list-style:none;margin-top:16px;border-top:1px solid var(--line);}
+  .rsvp-members li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line);}
+  .rsvp-members .nm{font-family:'Bodoni Moda',serif;font-size:17px;color:var(--ink);}
+  .rsvp-tg{display:inline-flex;border:1px solid var(--blue-soft);border-radius:30px;overflow:hidden;flex-shrink:0;}
+  .rsvp-tg button{
+    font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+    border:0;background:transparent;color:var(--ink-soft);padding:9px 13px;cursor:pointer;transition:.25s;
+  }
+  .rsvp-tg button.on[data-v="1"]{background:var(--blue-deep);color:#fff;}
+  .rsvp-tg button.on[data-v="0"]{background:#d9dde2;color:var(--ink);}
+  .rsvp-actions{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:24px;text-align:center;}
+  .rsvp-actions .btn-fill{margin-top:0;cursor:pointer;font-family:'Jost',sans-serif;font-weight:300;}
+  .rsvp-link{background:none;border:0;cursor:pointer;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-deep);text-decoration:underline;text-underline-offset:4px;}
+  .rsvp-done{text-align:center;}
+  .rsvp-check{width:54px;height:54px;margin:0 auto;border-radius:50%;border:1px solid var(--blue);display:flex;align-items:center;justify-content:center;color:var(--blue-deep);}
+  .rsvp-check svg{width:24px;height:24px;}
+  .rsvp-done h3{font-family:'Bodoni Moda',serif;font-weight:400;font-style:italic;font-size:26px;color:var(--ink);margin-top:16px;}
+  .rsvp-done p{font-size:13.5px;line-height:1.8;color:var(--ink-soft);margin-top:10px;}
+  .rsvp-done .btn-fill{background:#25D366;border-color:#25D366;color:#fff;margin-top:22px;}
+  .rsvp-done .btn-fill:hover{background:transparent;color:#1a9c4b;}
 
   /* ───────── FOOTER ───────── */
   footer{padding:60px 30px 40px;text-align:center;}
@@ -493,11 +535,38 @@
       <h2 class="sec-title reveal">Você <span class="it">vem?</span></h2>
       <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
 
-      <p class="rsvp-note reveal d1" id="rsvpNote">Sua presença fará deste dia um momento ainda mais especial. Confirme pelo WhatsApp, com um toque.</p>
-      <a class="btn-fill reveal d2" id="confirmBtn" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.770-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.170-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.5 1.71.63.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/><path d="M12 2.2c-5.4 0-9.8 4.4-9.8 9.8 0 1.73.45 3.4 1.32 4.88L2.2 21.8l5.05-1.3A9.75 9.75 0 0012 21.8c5.4 0 9.8-4.4 9.8-9.8S17.4 2.2 12 2.2zm0 17.9c-1.6 0-3.16-.43-4.53-1.240l-.32-.19-3.36.86.9-3.28-.21-.34A8.08 8.08 0 013.9 12c0-4.470 3.63-8.1 8.1-8.1s8.1 3.63 8.1 8.1-3.63 8.1-8.1 8.1z"/></svg>
-        Confirmar no WhatsApp
-      </a>
+      <p class="rsvp-note reveal d1">Sua presença fará deste dia um momento ainda mais especial. Digite seu nome para encontrar o seu convite.</p>
+
+      <!-- passo 1: buscar o nome -->
+      <div class="rsvp-box reveal d2" id="rsvpBusca">
+        <label class="rsvp-search">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input class="rsvp-input" id="rsvpInput" type="search" autocomplete="off" placeholder="Digite seu nome" aria-label="Seu nome">
+        </label>
+        <div class="rsvp-results" id="rsvpResults"></div>
+      </div>
+
+      <!-- passo 2: marcar quem vai -->
+      <div class="rsvp-box" id="rsvpEscolha" hidden>
+        <p class="rsvp-step-lbl">quem vai com você?</p>
+        <ul class="rsvp-members" id="rsvpMembers"></ul>
+        <div class="rsvp-actions">
+          <button class="btn-fill" type="button" id="rsvpConfirmar">Confirmar presença</button>
+          <button class="rsvp-link" type="button" id="rsvpVoltar">não é o meu convite</button>
+        </div>
+      </div>
+
+      <!-- passo 3: avisar aos noivos -->
+      <div class="rsvp-box rsvp-done" id="rsvpFeito" hidden>
+        <div class="rsvp-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3 id="rsvpFeitoTit">Presença confirmada!</h3>
+        <p id="rsvpFeitoTxt"></p>
+        <a class="btn-fill" id="confirmBtn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.770-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.170-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.5 1.71.63.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/><path d="M12 2.2c-5.4 0-9.8 4.4-9.8 9.8 0 1.73.45 3.4 1.32 4.88L2.2 21.8l5.05-1.3A9.75 9.75 0 0012 21.8c5.4 0 9.8-4.4 9.8-9.8S17.4 2.2 12 2.2zm0 17.9c-1.6 0-3.16-.43-4.53-1.240l-.32-.19-3.36.86.9-3.28-.21-.34A8.08 8.08 0 013.9 12c0-4.470 3.63-8.1 8.1-8.1s8.1 3.63 8.1 8.1-3.63 8.1-8.1 8.1z"/></svg>
+          Avisar aos noivos
+        </a>
+        <div class="rsvp-actions"><button class="rsvp-link" type="button" id="rsvpRefazer">alterar resposta</button></div>
+      </div>
     </div>
   </section>
 
@@ -567,16 +636,14 @@ const CONFIG = {
 
   // ══ Pix — chave única, usada em todas as cotas ══
   // Enquanto pixChave estiver vazia, o botão mostra "dados do Pix em breve".
-  pixChave:     '',                       // ex.: CPF só números, e-mail ou telefone (+55...)
-  pixTipo:      'CPF',                    // CPF · E-mail · Telefone · Aleatória
-  pixTitular:   'Ronaldinho e Monikelly', // nome que aparece no código Pix
-  pixBanco:     '',                       // ex.: 'Nubank'
+  pixChave:     'ronaldinhoemonikelly@gmail.com',
+  pixTipo:      'E-mail',                 // CPF · E-mail · Telefone · Aleatória
+  pixTitular:   'Antonia Monikelly Cavalcante Araujo',
+  pixBanco:     'Mercado Pago',
   pixCidade:    'Caucaia',
 
-  // ══ Confirmação de presença — número do WhatsApp com DDI+DDD (ex.: '5585999999999') ══
-  // Enquanto estiver vazio, a seção mostra "link em breve".
-  rsvpWhatsapp: '',
-  rsvpMensagem: 'Olá! Gostaria de confirmar minha presença no casamento de Ronaldinho & Monikelly 💍\n\nNome(s) de quem vai:',
+  // ══ Confirmação de presença — WhatsApp dos noivos (88) 9862-9782, com DDI 55 ══
+  rsvpWhatsapp: '558898629782',
 
   versiculo:    'Para que todos vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto.',
   versiculoRef: 'Isaías 41:20',
@@ -606,6 +673,70 @@ const PRESENTES = [
 ];
 
 /* ════════════════════════════════════════════════════════════
+   💌  CONVIDADOS — cada linha é um convite (família / grupo).
+   O convidado digita o nome, encontra o convite e marca quem vai.
+   ════════════════════════════════════════════════════════════ */
+const CONVIDADOS = [
+  ["Gleziedya Cavalcante", "Rafael Sousa"],
+  ["Italo Ryanberg"],
+  ["Thiago Lopes"],
+  ["Marinês Cavalcante"],
+  ["Efigênio Teixeira", "Antonia Elias", "Vitória"],
+  ["Monyky Cavalcante", "Mário Gleison", "Pyetro Cavalcante", "Mayte Cavalcante"],
+  ["Angelina Cavalcante"],
+  ["Sandra Sales", "Francivaldo Soriano", "Pedro Nogueira", "Gabriel Nogueira"],
+  ["Mírian Mota", "Bruno Fernandes", "Maria Isadora"],
+  ["Carmita Mota"],
+  ["Cicera Lopes", "Laryssa Emanuela", "Yara Mirella"],
+  ["Clécia Aline", "Herbert Veríssimo", "Ana Lis"],
+  ["Layana Lô", "Cleiton Brito", "Alice"],
+  ["Rafaela Silva", "Alan Sousa", "Allef Kainan", "Antônio Henry"],
+  ["Hiany Aline"],
+  ["Yanna Colavito"],
+  ["Leila Lima", "Jaimir Bosio", "Gabriele Lima", "Maria Júlia"],
+  ["Juvenal"],
+  ["Alecsandra", "Davi", "Heitor"],
+  ["Manoel"],
+  ["Wallyson", "Mila", "Alice", "Guilherme"],
+  ["Hermeson", "Anelise"],
+  ["Marciana", "Antônio Neto", "Rayla", "João Lucas"],
+  ["Edson", "Diana", "Ana Karoline", "Pedro"],
+  ["Marquinhos", "Francilva"],
+  ["Das Chagas"],
+  ["Gileno"],
+  ["Giulia", "Gabriel"],
+  ["Amanda", "Isac", "Iza"],
+  ["Diva Lima", "Felipe"],
+  ["Eveline", "Gildasio"],
+  ["Leonalda", "Reinaldo"],
+  ["Francisca Gomes", "Sebastião Vieira", "Victor"],
+  ["Raquel", "Clara", "Júnior", "Felipe"],
+  ["Lidia", "Manoel", "Vitória", "Charliane"],
+  ["Régia", "Maria"],
+  ["Gilvania", "Marcos"],
+  ["Vitória", "Junior"],
+  ["Bruno", "Débora", "Ester", "Bernardo"],
+  ["Geânia", "Samuel", "Thalyta"],
+  ["Sarah", "Hadriel"],
+  ["Lucas", "Cristiane"],
+  ["Silvia", "Sthefanie"],
+  ["Luciana"],
+  ["Isabele", "Robson"],
+  ["Bruna Lorena"],
+  ["Lilian Freitas"],
+  ["Seomara"],
+  ["Lucimeire"],
+  ["Fernanda"],
+  ["Ticiane"],
+  ["Rafael do Nascimento", "Miguel", "Eduardo"],
+  ["Irinelda"],
+  ["Erondi", "Selestina"],
+  ["Gilvan", "Fernanda", "Mabi", "Lucas"],
+  ["Herisson", "Verônica"],
+  ["Agildo"],
+];
+
+/* ════════════════════════════════════════════════════════════
    A partir daqui é o funcionamento — não precisa mexer.
    ════════════════════════════════════════════════════════════ */
 function txt(id,v){const e=document.getElementById(id);if(e)e.innerHTML=v;}
@@ -625,16 +756,94 @@ txt('musicTxt','tocando · '+CONFIG.musicaNome);
 document.getElementById('mapLocal').href=CONFIG.mapLocal;
 document.title=CONFIG.noivos+' — Casamento';
 
-/* ─── Confirmar presença (WhatsApp) ─── */
+/* ─── Confirmar presença (lista de convidados → WhatsApp) ─── */
 (function(){
-  const btn=document.getElementById('confirmBtn');
+  const $=id=>document.getElementById(id);
+  const norm=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+  const escH=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const num=String(CONFIG.rsvpWhatsapp||'').replace(/\D/g,'');
-  if(num){
-    btn.href='https://wa.me/'+num+'?text='+encodeURIComponent(CONFIG.rsvpMensagem);
-  }else{
-    btn.style.display='none';
-    txt('rsvpNote','Sua presença fará deste dia um momento ainda mais especial. Em breve enviaremos aqui o link para você confirmar.');
+  const CHAVE='rsvp-rm-2026';
+  let grupo=null, resp=[];
+
+  function mostrar(passo){
+    $('rsvpBusca').hidden=passo!=='busca';
+    $('rsvpEscolha').hidden=passo!=='escolha';
+    $('rsvpFeito').hidden=passo!=='feito';
   }
+
+  /* passo 1 — busca */
+  function buscar(){
+    const q=norm($('rsvpInput').value);
+    const out=$('rsvpResults');
+    if(q.length<3){out.innerHTML='';return;}
+    const termos=q.split(' ');
+    const achados=CONVIDADOS.map((g,i)=>({g,i})).filter(({g})=>g.some(n=>{const nn=norm(n);return termos.every(t=>nn.includes(t));}));
+    if(!achados.length){
+      const ajuda=num?` <a href="https://wa.me/${num}?text=${encodeURIComponent('Olá! Não encontrei meu nome na lista do convite de casamento de Ronaldinho & Monikelly. Meu nome é: ')}" target="_blank" rel="noopener">Fale com os noivos</a>.`:'';
+      out.innerHTML=`<p class="rsvp-empty">Não encontramos esse nome. Confira a grafia ou digite só o primeiro nome.${ajuda}</p>`;
+      return;
+    }
+    out.innerHTML=achados.slice(0,8).map(({g,i})=>{
+      const nomes=g.map(n=>{const nn=norm(n);return termos.every(t=>nn.includes(t))?`<mark>${escH(n)}</mark>`:escH(n);}).join(', ');
+      return `<button class="rsvp-group" type="button" data-g="${i}"><small>${g.length>1?'convite para '+g.length+' pessoas':'convite individual'}</small>${nomes}</button>`;
+    }).join('');
+  }
+  $('rsvpInput').addEventListener('input',buscar);
+  $('rsvpResults').addEventListener('click',e=>{
+    const b=e.target.closest('[data-g]'); if(!b) return;
+    abrirGrupo(Number(b.dataset.g));
+  });
+
+  /* passo 2 — quem vai */
+  function abrirGrupo(i){
+    grupo=i; resp=CONVIDADOS[i].map(()=>true);
+    desenharMembros(); mostrar('escolha');
+    $('rsvpEscolha').scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  function desenharMembros(){
+    $('rsvpMembers').innerHTML=CONVIDADOS[grupo].map((n,k)=>`<li><span class="nm">${escH(n)}</span>
+      <span class="rsvp-tg" data-k="${k}"><button type="button" data-v="1" class="${resp[k]?'on':''}">vou</button><button type="button" data-v="0" class="${resp[k]?'':'on'}">não vou</button></span></li>`).join('');
+  }
+  $('rsvpMembers').addEventListener('click',e=>{
+    const b=e.target.closest('button[data-v]'); if(!b) return;
+    resp[Number(b.parentNode.dataset.k)]=b.dataset.v==='1';
+    desenharMembros();
+  });
+  $('rsvpVoltar').addEventListener('click',()=>{mostrar('busca');$('rsvpInput').focus();});
+
+  /* passo 3 — avisar aos noivos */
+  function concluir(){
+    const g=CONVIDADOS[grupo];
+    const vao=g.filter((_,k)=>resp[k]), nao=g.filter((_,k)=>!resp[k]);
+    let msg;
+    if(vao.length){
+      msg='Olá, Ronaldinho e Monikelly! 💍\nConfirmo presença no casamento de vocês, dia '+CONFIG.dataTexto.toLowerCase()+'.\n\n✅ Vão:\n'+vao.map(n=>'• '+n).join('\n');
+      if(nao.length) msg+='\n\n❌ Não poderão ir:\n'+nao.map(n=>'• '+n).join('\n');
+      $('rsvpFeitoTit').textContent='Presença confirmada!';
+      $('rsvpFeitoTxt').innerHTML='Que alegria! Agora é só tocar no botão abaixo para <strong style="color:var(--ink);font-weight:400">avisar aos noivos</strong> pelo WhatsApp e enviar a mensagem.';
+    }else{
+      msg='Olá, Ronaldinho e Monikelly! 💙\nInfelizmente não poderemos ir ao casamento de vocês, mas desejamos muitas felicidades!\n\n'+g.map(n=>'• '+n).join('\n');
+      $('rsvpFeitoTit').textContent='Que pena!';
+      $('rsvpFeitoTxt').innerHTML='Sentiremos sua falta. Toque no botão abaixo para avisar aos noivos pelo WhatsApp.';
+    }
+    $('confirmBtn').href='https://wa.me/'+num+'?text='+encodeURIComponent(msg);
+    mostrar('feito');
+  }
+  $('rsvpConfirmar').addEventListener('click',()=>{
+    concluir();
+    try{localStorage.setItem(CHAVE,JSON.stringify({grupo,resp}));}catch(e){}
+    $('rsvpFeito').scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  $('rsvpRefazer').addEventListener('click',()=>{
+    try{localStorage.removeItem(CHAVE);}catch(e){}
+    $('rsvpInput').value=''; $('rsvpResults').innerHTML=''; mostrar('busca');
+  });
+
+  /* quem já respondeu neste aparelho volta direto para o passo 3 */
+  try{
+    const s=JSON.parse(localStorage.getItem(CHAVE)||'null');
+    if(s&&CONVIDADOS[s.grupo]&&Array.isArray(s.resp)&&s.resp.length===CONVIDADOS[s.grupo].length){grupo=s.grupo;resp=s.resp;concluir();}
+  }catch(e){}
 })();
 
 /* ═══════════ PIX — código "copia e cola" (BR Code / Banco Central) ═══════════
