@@ -15,4 +15,11 @@ que abre o WhatsApp (`rsvpWhatsapp`) com a mensagem pronta.
 Chave e-mail `ronaldinhoemonikelly@gmail.com` (Mercado Pago — Antonia Monikelly Cavalcante Araujo).
 Cada cota gera o Pix copia e cola com o valor já preenchido.
 
+## Cartão (InfinitePay)
+O botão **Cartão** de cada cota abre o checkout da InfinitePay na InfiniteTag `$antonia-monikelly`.
+- Hospedado na **Vercel**: usa a função `api/cartao.js`, com os preços oficiais de `api/_presentes.js`
+  (ao mudar nome ou valor de uma cota, altere no `index.html` **e** em `api/_presentes.js`).
+- Em outro host (ex.: GitHub Pages): o convite chama a API da InfinitePay direto do navegador.
+Depois do pagamento, o convidado volta ao convite e vê um "Muito obrigado!".
+
 A música (Salmo 126) toca pelo YouTube, num player oculto, quando o convidado toca em "toque para abrir".
